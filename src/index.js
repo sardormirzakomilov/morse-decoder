@@ -1,3 +1,4 @@
+
 const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
@@ -38,7 +39,30 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let decoded_text = "";
+
+    for (let i = 0; i < expr.length; i += 10) {
+        let raw_char = expr.slice(i, i + 10);
+
+        if (raw_char === "**********") {
+            decoded_text += " ";
+            continue;
+        }
+
+        let morse_encoded_char = "";
+
+        for (let j = 0; j < raw_char.length; j += 2) {
+            let substr = raw_char.slice(j, j + 2);
+
+            if (substr != "00") {
+                morse_encoded_char += substr === "10" ? "." : "-";
+            }
+        }
+
+        decoded_text += MORSE_TABLE[morse_encoded_char];
+    }
+
+    return decoded_text;
 }
 
 module.exports = {
